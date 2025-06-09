@@ -1,0 +1,374 @@
+<div class="bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen">
+  <div class="container mx-auto p-4 max-w-7xl">
+    <div class="text-center mb-8">
+      <h1
+        class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-2"
+      >
+        🐱 Razas de Gatos
+      </h1>
+      <p class="text-gray-600 text-lg">
+        Descubre las diferentes razas felinas del mundo
+      </p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+      <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div class="relative flex-1 max-w-md">
+          <span
+            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >🔍</span
+          >
+          <input
+            type="text"
+            [(ngModel)]="searchText"
+            placeholder="Buscar por nombre de raza..."
+            class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 outline-none"
+          />
+        </div>
+        <button
+          (click)="searchBreeds()"
+          class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold"
+        >
+          🔍 Buscar
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center py-12">
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div
+          class="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"
+        ></div>
+        <p class="text-gray-600 text-lg">Cargando datos...</p>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="text-center py-12">
+      <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-8">
+        <span class="text-red-500 text-4xl mb-4 block">⚠️</span>
+        <p class="text-red-600 text-lg font-semibold">{{ errorMessage }}</p>
+      </div>
+    </div>
+
+    <div
+      *ngIf="!isLoading && !errorMessage"
+      class="bg-white rounded-2xl shadow-xl overflow-hidden"
+    >
+      <!-- Versión desktop -->
+      <div class="hidden lg:block overflow-x-auto">
+        <table class="w-full">
+          <thead
+            class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+          >
+            <tr>
+              <th class="px-6 py-4 text-left font-semibold">🖼️ Imagen</th>
+              <th class="px-6 py-4 text-left font-semibold">🐾 Nombre</th>
+              <th class="px-6 py-4 text-left font-semibold">🌍 Origen</th>
+              <th class="px-6 py-4 text-center font-semibold">
+                💖 Esperanza de vida
+              </th>
+              <th class="px-6 py-4 text-left font-semibold">😸 Temperamento</th>
+              <th class="px-6 py-4 text-center font-semibold">⚡ Energía</th>
+              <th class="px-6 py-4 text-center font-semibold">
+                🏠 Adaptabilidad
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr
+              *ngFor="let breed of paginatedBreeds"
+              class="hover:bg-purple-50 transition-colors duration-200"
+            >
+              <td class="px-6 py-4">
+                <div class="relative group">
+                  <img
+                    *ngIf="breed.image?.url"
+                    [src]="breed.image.url"
+                    [alt]="breed.name"
+                    class="w-20 h-20 object-cover rounded-xl shadow-md group-hover:shadow-lg transition-shadow duration-300"
+                  />
+                  <div
+                    *ngIf="!breed.image?.url"
+                    class="w-20 h-20 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400"
+                  >
+                    🖼️
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="font-bold text-gray-900 text-lg">
+                  {{ breed.name }}
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+                >
+                  🏳️ {{ breed.origin }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
+                >
+                  📅 {{ breed.life_span }} años
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <div class="text-sm text-gray-600 leading-relaxed max-w-xs">
+                  {{ breed.temperament }}
+                </div>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center items-center space-x-1">
+                  <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+                    <span class="text-yellow-400" *ngIf="i < breed.energy_level"
+                      >⭐</span
+                    >
+                    <span class="text-gray-300" *ngIf="i >= breed.energy_level"
+                      >⭐</span
+                    >
+                  </ng-container>
+                  <span class="ml-2 text-sm font-medium"
+                    >{{ breed.energy_level }}/5</span
+                  >
+                </div>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center items-center space-x-1">
+                  <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+                    <span class="text-yellow-400" *ngIf="i < breed.adaptability"
+                      >⭐</span
+                    >
+                    <span class="text-gray-300" *ngIf="i >= breed.adaptability"
+                      >⭐</span
+                    >
+                  </ng-container>
+                  <span class="ml-2 text-sm font-medium"
+                    >{{ breed.adaptability }}/5</span
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Versión móvil/tablet -->
+      <div class="lg:hidden p-4 space-y-4">
+        <div
+          *ngFor="let breed of paginatedBreeds"
+          class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300"
+        >
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <img
+                *ngIf="breed.image?.url"
+                [src]="breed.image.url"
+                [alt]="breed.name"
+                class="w-20 h-20 object-cover rounded-lg shadow-md"
+              />
+              <div
+                *ngIf="!breed.image?.url"
+                class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-2xl"
+              >
+                🖼️
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                {{ breed.name }}
+              </h3>
+              <div class="space-y-2">
+                <div class="flex items-center">
+                  <span class="text-blue-500 w-5">🏳️</span>
+                  <span class="text-sm text-gray-600 ml-2"
+                    >{{ breed.origin }}</span
+                  >
+                </div>
+                <div class="flex items-center">
+                  <span class="text-red-500 w-5">💖</span>
+                  <span class="text-sm text-gray-600 ml-2"
+                    >{{ breed.life_span }} años</span
+                  >
+                </div>
+                <div class="flex items-start">
+                  <span class="text-green-500 w-5 mt-0.5">😸</span>
+                  <span class="text-sm text-gray-600 ml-2 leading-relaxed"
+                    >{{ breed.temperament }}</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex justify-between mt-4 pt-4 border-t border-gray-100"
+              >
+                <div class="text-center">
+                  <div class="text-xs text-gray-500 mb-1">Energía</div>
+                  <div class="flex justify-center space-x-0.5">
+                    <ng-container
+                      *ngFor="let star of [1,2,3,4,5]; let i = index"
+                    >
+                      <span
+                        class="text-yellow-400 text-sm"
+                        *ngIf="i < breed.energy_level"
+                        >⭐</span
+                      >
+                      <span
+                        class="text-gray-300 text-sm"
+                        *ngIf="i >= breed.energy_level"
+                        >⭐</span
+                      >
+                    </ng-container>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    {{ breed.energy_level }}/5
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="text-xs text-gray-500 mb-1">Adaptabilidad</div>
+                  <div class="flex justify-center space-x-0.5">
+                    <ng-container
+                      *ngFor="let star of [1,2,3,4,5]; let i = index"
+                    >
+                      <span
+                        class="text-yellow-400 text-sm"
+                        *ngIf="i < breed.adaptability"
+                        >⭐</span
+                      >
+                      <span
+                        class="text-gray-300 text-sm"
+                        *ngIf="i >= breed.adaptability"
+                        >⭐</span
+                      >
+                    </ng-container>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    {{ breed.adaptability }}/5
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-gray-50 px-4 py-4 border-t border-gray-200"
+        *ngIf="filteredBreeds.length > itemsPerPage"
+      >
+        <div class="flex flex-col space-y-4">
+          <!-- Información de resultados -->
+          <div class="text-sm text-gray-600 text-center sm:text-left">
+            Mostrando
+            <span class="font-semibold"
+              >{{ (currentPage - 1) * itemsPerPage + 1 }}-{{
+              Math.min(currentPage * itemsPerPage, filteredBreeds.length)
+              }}</span
+            >
+            de
+            <span class="font-semibold">{{ filteredBreeds.length }}</span>
+            resultados
+          </div>
+
+          <div class="flex justify-center items-center">
+            <div class="flex items-center space-x-1">
+              <button
+                (click)="goToPage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+                [ngClass]="{
+            'opacity-50 cursor-not-allowed': currentPage === 1,
+            'hover:bg-gray-100': currentPage !== 1
+          }"
+                class="px-3 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg transition-colors duration-200"
+              >
+                <span class="hidden sm:inline">← Anterior</span>
+                <span class="sm:hidden">←</span>
+              </button>
+
+              <ng-container *ngIf="totalPages() <= 7">
+                <button
+                  *ngFor="let page of [].constructor(totalPages()); let i = index"
+                  (click)="goToPage(i + 1)"
+                  [ngClass]="{
+              'bg-purple-600 text-white border-purple-600': currentPage === i + 1,
+              'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': currentPage !== i + 1
+            }"
+                  class="w-10 h-10 text-sm font-medium border rounded-lg transition-colors duration-200 flex items-center justify-center"
+                >
+                  {{ i + 1 }}
+                </button>
+              </ng-container>
+
+              <ng-container *ngIf="totalPages() > 7">
+                <button
+                  (click)="goToPage(1)"
+                  [ngClass]="{
+              'bg-purple-600 text-white border-purple-600': currentPage === 1,
+              'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': currentPage !== 1
+            }"
+                  class="w-10 h-10 text-sm font-medium border rounded-lg transition-colors duration-200 flex items-center justify-center"
+                >
+                  1
+                </button>
+
+                <span *ngIf="currentPage > 4" class="px-2 py-2 text-gray-500"
+                  >...</span
+                >
+
+                <ng-container
+                  *ngFor="let page of getVisiblePages(); let i = index"
+                >
+                  <button
+                    (click)="goToPage(page)"
+                    [ngClass]="{
+                'bg-purple-600 text-white border-purple-600': currentPage === page,
+                'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': currentPage !== page
+              }"
+                    class="w-10 h-10 text-sm font-medium border rounded-lg transition-colors duration-200 flex items-center justify-center"
+                  >
+                    {{ page }}
+                  </button>
+                </ng-container>
+
+                <span
+                  *ngIf="currentPage < totalPages() - 3"
+                  class="px-2 py-2 text-gray-500"
+                  >...</span
+                >
+
+                <button
+                  *ngIf="totalPages() > 1"
+                  (click)="goToPage(totalPages())"
+                  [ngClass]="{
+              'bg-purple-600 text-white border-purple-600': currentPage === totalPages(),
+              'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': currentPage !== totalPages()
+            }"
+                  class="w-10 h-10 text-sm font-medium border rounded-lg transition-colors duration-200 flex items-center justify-center"
+                >
+                  {{ totalPages() }}
+                </button>
+              </ng-container>
+
+              <button
+                (click)="goToPage(currentPage + 1)"
+                [disabled]="currentPage === totalPages()"
+                [ngClass]="{
+            'opacity-50 cursor-not-allowed': currentPage === totalPages(),
+            'hover:bg-gray-100': currentPage !== totalPages()
+          }"
+                class="px-3 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg transition-colors duration-200"
+              >
+                <span class="hidden sm:inline">Siguiente →</span>
+                <span class="sm:hidden">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="text-xs text-gray-500 text-center sm:hidden">
+            Página {{ currentPage }} de {{ totalPages() }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+swiper-container {
+  --swiper-navigation-color: #3b82f6;
+  --swiper-pagination-color: #3b82f6;
+  --swiper-navigation-size: 44px;
+}
+
+swiper-container::part(button-next),
+swiper-container::part(button-prev) {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+swiper-container::part(button-next):hover,
+swiper-container::part(button-prev):hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.05);
+}
+
+swiper-container::part(pagination) {
+  bottom: 10px;
+}
+
+swiper-container::part(bullet) {
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #3b82f6;
+}
+
+swiper-container::part(bullet-active) {
+  background: #3b82f6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carousel-container {
+  height: 18rem; /* 72 en Tailwind = h-72 */
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 640px) {
+  .carousel-container {
+    height: 24rem; /* 96 en Tailwind = h-96 */
+  }
+}
+
+.slide-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.carousel-image:hover {
+  transform: scale(1.02);
+}
+
+.carousel-container::part(button-next),
+.carousel-container::part(button-prev) {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: -1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.carousel-container::part(button-next):hover,
+.carousel-container::part(button-prev):hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.carousel-container::part(bullet) {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.breed-info-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.carousel-container::part(bullet-active) {
+  background: #ffffff;
+  transform: scale(1.2);
+}
+
+.slide-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slide-container.loading::before {
+  opacity: 1;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  swiper-container::part(button-next),
+  swiper-container::part(button-prev) {
+    --swiper-navigation-size: 36px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-container::part(button-next),
+  .carousel-container::part(button-prev) {
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
+  }
+
+  .carousel-container::part(bullet) {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}
+
+.loading-spinner {
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.breed-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-image[data-aspect="wide"] {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+
+.carousel-image[data-aspect="tall"] {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
