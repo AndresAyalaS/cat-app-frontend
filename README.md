@@ -1,59 +1,125 @@
-# CatApp
+# Cat App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+Aplicación web desarrollada en Angular para mostrar información y características de gatos.
 
-## Development server
+## Tabla de contenido
 
-To start a local development server, run:
+- [Descripción](#descripción)
+- [Requisitos previos](#requisitos-previos)
+- [Instalación](#instalación)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Librerías instaladas](#librerías-instaladas)
+- [Comandos útiles](#comandos-útiles)
+- [Pruebas](#pruebas)
+- [Contribución](#contribución)
+- [Licencia](#licencia)
+- [Autores](#autores)
 
-```bash
-ng serve
+## Descripción
+
+Cat App es una aplicación web construida con Angular que permite visualizar información sobre gatos, utilizando componentes modernos y estilos personalizados.
+
+## Requisitos previos
+
+- [Node.js](https://nodejs.org/) (versión recomendada: >= 16)
+- [Angular CLI](https://angular.io/cli) (versión recomendada: >= 16)
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/AndresAyalaS/cat-app-frontend
+   cd cat-app
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Inicia la aplicación:
+   ```bash
+   ng serve
+   ```
+   La aplicación estará disponible en `http://localhost:4200`.
+
+## Estructura del proyecto
+
+```
+cat-app/
+├── src/
+│   ├── app/
+│   ├── environments/
+│   └── index.html
+├── angular.json
+├── package.json
+└── README.md
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Librerías instaladas
 
-## Code scaffolding
+### Dependencias principales
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- [@angular/animations](https://www.npmjs.com/package/@angular/animations)
+- [@angular/common](https://www.npmjs.com/package/@angular/common)
+- [@angular/compiler](https://www.npmjs.com/package/@angular/compiler)
+- [@angular/core](https://www.npmjs.com/package/@angular/core)
+- [@angular/forms](https://www.npmjs.com/package/@angular/forms)
+- [@angular/platform-browser](https://www.npmjs.com/package/@angular/platform-browser)
+- [@angular/router](https://www.npmjs.com/package/@angular/router)
+- [rxjs](https://www.npmjs.com/package/rxjs)
+- [swiper](https://www.npmjs.com/package/swiper)
+- [tslib](https://www.npmjs.com/package/tslib)
+- [zone.js](https://www.npmjs.com/package/zone.js)
 
-```bash
-ng generate component component-name
-```
+### Dependencias de desarrollo
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- [@angular-devkit/build-angular](https://www.npmjs.com/package/@angular-devkit/build-angular)
+- [@angular/build](https://www.npmjs.com/package/@angular/build)
+- [@angular/cli](https://www.npmjs.com/package/@angular/cli)
+- [@angular/compiler-cli](https://www.npmjs.com/package/@angular/compiler-cli)
+- [@types/jasmine](https://www.npmjs.com/package/@types/jasmine)
+- [@types/swiper](https://www.npmjs.com/package/@types/swiper)
+- [autoprefixer](https://www.npmjs.com/package/autoprefixer)
+- [jasmine-core](https://www.npmjs.com/package/jasmine-core)
+- [karma](https://www.npmjs.com/package/karma)
+- [karma-chrome-launcher](https://www.npmjs.com/package/karma-chrome-launcher)
+- [karma-coverage](https://www.npmjs.com/package/karma-coverage)
+- [karma-jasmine](https://www.npmjs.com/package/karma-jasmine)
+- [karma-jasmine-html-reporter](https://www.npmjs.com/package/karma-jasmine-html-reporter)
+- [postcss](https://www.npmjs.com/package/postcss)
+- [tailwindcss](https://www.npmjs.com/package/tailwindcss)
+- [typescript](https://www.npmjs.com/package/typescript)
 
-```bash
-ng generate --help
-```
+## Comandos útiles
 
-## Building
+- Iniciar la aplicación:  
+  ```bash
+  ng serve
+  ```
+- Ejecutar pruebas unitarias:  
+  ```bash
+  ng test
+  ```
+- Construir para producción:  
+  ```bash
+  ng build
+  ```
 
-To build the project run:
+## Pruebas
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+Este proyecto utiliza [Jasmine](https://jasmine.github.io/) y [Karma](https://karma-runner.github.io/) para pruebas unitarias.  
+Para ejecutar los tests:
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Contribución
 
-For end-to-end (e2e) testing, run:
+¡Las contribuciones son bienvenidas! Por favor, abre un issue o un pull request para sugerencias o mejoras.
 
-```bash
-ng e2e
-```
+## Licencia
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Este proyecto está bajo la licencia MIT.
 
-## Additional Resources
+## Autores
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Andres Gerardo Ayala Sanchez](https://github.com/AndresAyalaS)
